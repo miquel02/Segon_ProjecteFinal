@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove;
     public bool canRoll;
     public bool isAttacking;
+    public bool hasAttacked;
 
 
     //Animationa
@@ -39,19 +40,20 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             _speed = sprintSpeed;
-            Debug.Log(_speed);
+            
             animator.SetBool("isSprint", true);
         }
         else
         {
             _speed = normalSpeed;
-            Debug.Log(_speed);
+            
             animator.SetBool("isSprint", false);
         }
 
         //Attack
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            hasAttacked = true;
             isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);

@@ -21,6 +21,6 @@ public class CameraController : MonoBehaviour
         //Vector3 pos = cameraObjective.transform.position;
         //pos.z += cameraHeight;
         //transform.position = pos;
-        transform.position = Vector3.MoveTowards(transform.position, cameraObjective.transform.position, .03f);
+        transform.position = Vector3.MoveTowards(transform.position, cameraObjective.transform.position, 0.03f);
     }
 }

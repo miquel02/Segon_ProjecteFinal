@@ -2368,6 +2368,7 @@ GameObject:
   - component: {fileID: 9036980633323257398}
   - component: {fileID: 7726511499524026324}
   - component: {fileID: 641831762}
+  - component: {fileID: 5709584032851352174}
   m_Layer: 0
   m_Name: MaleCharacterPBR
   m_TagString: Untagged
@@ -2405,7 +2406,7 @@ Animator:
   m_GameObject: {fileID: 8189980434977739222}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0308cf4e83cf517488b60af58b290fe0, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bd760c4fae148f4ba04d184d77cc969, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2444,6 +2445,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5709584032851352174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8189980434977739222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00cdc3f59b37b8542b8595c49bd59ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rb: {fileID: 641831762}
+  _turnSpeed: 360
+  canMove: 0
+  canRoll: 0
+  isAttacking: 0
+  hasAttacked: 0
+  animator: {fileID: 9036980633323257398}
+  isMoving: 0
 --- !u!1 &8206070634150816031
 GameObject:
   m_ObjectHideFlags: 0

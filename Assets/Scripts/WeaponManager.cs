@@ -8,6 +8,8 @@ public class WeaponManager : MonoBehaviour
 
     private PlayerController playerControllerScript;
 
+    
+
     private void Start()
     {
         playerControllerScript = GameObject.Find("MaleCharacterPBR").GetComponent<PlayerController>();
