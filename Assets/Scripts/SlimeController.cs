@@ -29,6 +29,7 @@ public class SlimeController : MonoBehaviour
         if (dist <= followRange){
             //move to target(player) 
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, slimeSpeed);
+            transform.LookAt(target);
         }
         //else, if it is not in rage, it will not follow player
     }
