@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &34856942 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1919012471076396, guid: 55776efecb0cd134ea5f418c2f97a705,
+    type: 3}
+  m_PrefabInstance: {fileID: 1924785964}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &50432945
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +174,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d8098f948826584fab235cb59c8b684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraObjective: {fileID: 641831761}
+  cameraObjective:
+  - {fileID: 641831761}
+  - {fileID: 34856942}
+  - {fileID: 248607865}
+  cameraTarget: 0
+  camOnPlayer: 0
 --- !u!1001 &69720641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -297,6 +308,12 @@ Transform:
   m_Father: {fileID: 50432946}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &248607865 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1774625739149480, guid: 38efdaadbfe1d624bbee439cb02e7661,
+    type: 3}
+  m_PrefabInstance: {fileID: 69720641}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +747,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 641831762, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: m_Constraints
-      value: 84
+      value: 116
       objectReference: {fileID: 0}
     - target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
         type: 3}
