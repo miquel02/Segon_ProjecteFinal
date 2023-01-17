@@ -25,15 +25,23 @@ public class VisualEffectSpawner : MonoBehaviour
             SpawnEffect();
             playerControllerScript.hasAttacked = false;
         }
-        
+
+        if (playerControllerScript.hasSpinned)
+        {
+            SpawnEffect();
+            Invoke("SpawnEffect", 0.2f);
+            Invoke("SpawnEffect", 0.4f);
+            playerControllerScript.hasSpinned = false;
+        }
+
     }
 
     void SpawnEffect()
     {
         VisualEffect newBurstEffect = Instantiate(slashEffect, transform.position, transform.rotation);
-
+        
         newBurstEffect.Play();
-
+        
         Destroy(newBurstEffect.gameObject, 1f);
     }
 }

@@ -17,7 +17,7 @@ public class WeaponManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") && playerControllerScript.isAttacking)
+        if (other.gameObject.CompareTag("Enemy") )
         {
             other.gameObject.GetComponent<HealthManager>().
             DamageCharacter(damage);

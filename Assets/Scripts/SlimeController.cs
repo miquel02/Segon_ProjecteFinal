@@ -13,6 +13,7 @@ public class SlimeController : MonoBehaviour
 
     public Transform target; //drag and stop player object in the inspector
     public float followRange;
+    public float attackRange;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +33,12 @@ public class SlimeController : MonoBehaviour
             transform.LookAt(target);
         }
         //else, if it is not in rage, it will not follow player
+
+        if(dist <= attackRange)
+        {
+            transform.LookAt(target);
+            attack();
+        }
     }
 
     void OnTriggerEnter(Collider attack)
@@ -43,4 +50,8 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    public void attack()
+    {
+
+    }
 }

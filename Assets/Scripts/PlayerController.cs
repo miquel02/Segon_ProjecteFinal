@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove;
     public bool canRoll;
-    public bool isAttacking;
     public bool hasAttacked;
+    public bool hasSpinned;
 
 
     //Animationa
@@ -54,7 +54,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             hasAttacked = true;
-            isAttacking = true;
             canMove = false;
             animator.SetBool("isAttacking", true);
         }
@@ -101,6 +100,19 @@ public class PlayerController : MonoBehaviour
         {
             Invoke(nameof(DelayedCanMove), 0.4f);
             animator.SetBool("isBlocking", false);
+        }
+
+        //Spin
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            canMove = false;
+            hasSpinned = true;
+            animator.SetBool("isSpinning", true);
+        }
+        else if (!canMove)
+        {
+            Invoke(nameof(DelayedCanMove), 0.4f);
+            animator.SetBool("isSpinning", false);
         }
 
 
