@@ -803,6 +803,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4906828391645816}
   - component: {fileID: 95237074988894122}
+  - component: {fileID: 5872360392872885485}
+  - component: {fileID: 2914047021500392673}
+  - component: {fileID: 6528631630379662285}
+  - component: {fileID: 7597085613002375629}
   m_Layer: 0
   m_Name: TurtleShellPBR
   m_TagString: Untagged
@@ -847,6 +851,70 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!54 &5872360392872885485
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 84
+  m_CollisionDetection: 0
+--- !u!114 &2914047021500392673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ff485175743d24180dec1fc280f612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  expWhenDefeated: 0
+  rigidBody: {fileID: 5872360392872885485}
+--- !u!65 &6528631630379662285
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.0836384, y: 1.1377997, z: 1.319947}
+  m_Center: {x: 0.0059741735, y: 0.5747138, z: -0.064386725}
+--- !u!114 &7597085613002375629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f45df6ebae3d564c8833b56609b59f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimeSpeed: 0.01
+  slimeRigidbody: {fileID: 5872360392872885485}
+  moveDirection: {x: 0, y: 0, z: 0}
+  knockbackForce: 700
+  target: {fileID: 8855052669661678444, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+  followRange: 50
+  attackRange: 0
 --- !u!1 &1822049695589022
 GameObject:
   m_ObjectHideFlags: 0

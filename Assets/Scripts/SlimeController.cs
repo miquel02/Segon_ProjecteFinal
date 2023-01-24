@@ -11,34 +11,36 @@ public class SlimeController : MonoBehaviour
 
     public float knockbackForce = 700;
 
-    public Transform target; //drag and stop player object in the inspector
+    public GameObject target; //drag and stop player object in the inspector
     public float followRange;
     public float attackRange;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        target = GameObject.Find("MaleCharacterPBR");
     }
 
     // Update is called once per frame
     public void Update()
     {
         //get the distance between the player and enemy (t$$anonymous$$s object)
-        float dist = Vector3.Distance(target.position, transform.position);
+        float dist = Vector3.Distance(target.transform.position, transform.position);
         //check if it is wit$$anonymous$$n the range you set
         if (dist <= followRange){
             //move to target(player) 
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, slimeSpeed);
-            transform.LookAt(target);
+            transform.LookAt(target.transform);
         }
         //else, if it is not in rage, it will not follow player
 
         if(dist <= attackRange)
         {
-            transform.LookAt(target);
+            transform.LookAt(target.transform);
             attack();
         }
+
+
     }
 
     void OnTriggerEnter(Collider attack)

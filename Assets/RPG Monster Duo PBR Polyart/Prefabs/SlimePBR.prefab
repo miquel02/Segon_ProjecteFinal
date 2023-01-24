@@ -519,8 +519,9 @@ MonoBehaviour:
   slimeRigidbody: {fileID: 8265006412817423572}
   moveDirection: {x: 0, y: 0, z: 0}
   knockbackForce: 700
-  target: {fileID: 0}
-  followRange: 10
+  target: {fileID: 8855052669661678444, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+  followRange: 50
+  attackRange: 0
 --- !u!1 &1989916952965676
 GameObject:
   m_ObjectHideFlags: 0
