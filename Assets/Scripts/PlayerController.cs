@@ -23,9 +23,15 @@ public class PlayerController : MonoBehaviour
     public float maxEnergy;
     [SerializeField] StaminaBar staminaBar;
 
-    //Animationa
+    //Animations
     public Animator animator;
     public bool isMoving;
+
+    public bool isWalk;
+    public bool isRun;
+    public bool isAttack;
+    public bool isRoll;
+    public bool isSpin;
 
 
     private void Start()
@@ -47,59 +53,64 @@ public class PlayerController : MonoBehaviour
         //Walk
         if (_input != Vector3.zero)
         {
+           
             animator.SetBool("isMoving", true);
         }
         else
         {
             animator.SetBool("isMoving", false);
-            InvokeRepeating("RestoreEnergy", 1f, 1f);
+            //InvokeRepeating("RestoreEnergy", 1f, 1f);
         }
 
         //Roll
-        if (Input.GetKeyDown(KeyCode.Space) && canRoll && currentEnergy != 0)
+        if (Input.GetKeyDown(KeyCode.Space) && currentEnergy != 0 && !isRoll)
         {
-            canRoll = false;
+            isRoll = true;
+            isWalk = false;
+            isRun = false;
+            isAttack = false;
+            isSpin = false;
 
-            canMove = false;
-            animator.SetBool("isRolling", true);
+            if (isRoll)
+            {
 
-            //PlayerUseStamina(20);
+                animator.SetBool("isRolling", true);
+                transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+                Invoke(nameof(DelayedCanMove), 0.4f);
+            }    
         }
-        else if (!canMove && !canRoll)
-        {
-            Invoke(nameof(DelayedCanMove), 0.4f);
-            transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
-            animator.SetBool("isRolling", false);
-        }
+   
 
         //Sprint
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _speed = sprintSpeed;
-
-            animator.SetBool("isSprint", true);
+            if(!isRoll && !isSpin && !isAttack)
+            {
+                _speed = sprintSpeed;
+                animator.SetBool("isSprint", true);
+            }
         }
         else
         {
             _speed = normalSpeed;
-
             animator.SetBool("isSprint", false);
         }
 
         //Attack
-        if (Input.GetKeyDown(KeyCode.Mouse0) && currentEnergy != 0)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && currentEnergy != 0 && !isAttack)
         {
-            hasAttacked = true;
-            canMove = false;
-            animator.SetBool("isAttacking", true);
-            //PlayerUseStamina(10);
-        }
-        else if (!canMove)
-        {
-            //isAttacking = false;
-            Invoke(nameof(DelayedCanMove), 0.4f);
-            animator.SetBool("isAttacking", false);
-            //isAttacking = false;
+            isRoll = false;
+            isWalk = false;
+            isRun = false;
+            isAttack = true;
+            isSpin = false;
+            
+            if (isAttack)
+            {
+                animator.SetBool("isAttacking", true);
+                hasAttacked = true;
+                Invoke(nameof(DelayedCanMove), 0.2f);
+            }
         }
 
         if (Input.GetKey(KeyCode.Mouse1))
@@ -114,20 +125,21 @@ public class PlayerController : MonoBehaviour
         }
 
         //Spin
-        if (Input.GetKeyDown(KeyCode.Mouse2) && currentEnergy != 0)
+        if (Input.GetKeyDown(KeyCode.Mouse2) && currentEnergy != 0 && !isSpin)
         {
-            canMove = false;
-            hasSpinned = true;
-            animator.SetBool("isSpinning", true);
-            //PlayerUseStamina(50);
-        }
-        else if (!canMove)
-        {
-            Invoke(nameof(DelayedCanMove), 0.4f);
-            animator.SetBool("isSpinning", false);
-        }
-        
+            isRoll = false;
+            isWalk = false;
+            isRun = false;
+            isAttack = false;
+            isSpin = true;
 
+            if (isSpin)
+            {
+                hasSpinned = true;
+                animator.SetBool("isSpinning", true); 
+                Invoke(nameof(DelayedCanMove), 0.2f);           
+            }         
+        }       
     }
 
     void LateUpdate()
@@ -166,6 +178,13 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         canRoll = true;
         //isAttacking = false;
+        isRoll = false;
+        isAttack = false;
+        isSpin = false;
+        animator.SetBool("isAttacking", false);
+        animator.SetBool("isRolling", false);
+        animator.SetBool("isSpinning", false);
+
 
     }
 
