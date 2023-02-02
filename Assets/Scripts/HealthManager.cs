@@ -11,6 +11,8 @@ public class HealthManager : MonoBehaviour
 
     public Rigidbody rigidBody;
 
+    [SerializeField] ParticleSystem dieParticle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class HealthManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             gameObject.SetActive(false);
+            SpawnDiParticle();
         }
 
 
@@ -42,4 +45,12 @@ public class HealthManager : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    void SpawnDiParticle()
+    {
+        ParticleSystem newParticleSystem = Instantiate(dieParticle, transform.position, transform.rotation);
+
+        newParticleSystem.Play();
+
+        Destroy(newParticleSystem.gameObject, 1f);
+    }
 }

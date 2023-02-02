@@ -7,7 +7,7 @@ public class VisualEffectSpawner : MonoBehaviour
 {
 
     [SerializeField] ParticleSystem slashSword;
-
+    [SerializeField] ParticleSystem slashSpin;
 
     private PlayerController playerControllerScript;
 
@@ -30,6 +30,7 @@ public class VisualEffectSpawner : MonoBehaviour
         if (playerControllerScript.hasSpinned)
         {
             playerControllerScript.hasSpinned = false;
+            SpawnSpin();
         }
 
     }
@@ -40,6 +41,14 @@ public class VisualEffectSpawner : MonoBehaviour
         
         newParticleSystem.Play();
         
+        Destroy(newParticleSystem.gameObject, 1f);
+    }
+    void SpawnSpin()
+    {
+        ParticleSystem newParticleSystem = Instantiate(slashSpin, transform.position, transform.rotation);
+
+        newParticleSystem.Play();
+
         Destroy(newParticleSystem.gameObject, 1f);
     }
 }

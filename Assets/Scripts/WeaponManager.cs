@@ -19,8 +19,7 @@ public class WeaponManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy") )
         {
-            other.gameObject.GetComponent<HealthManager>().
-            DamageCharacter(damage);
+            other.gameObject.GetComponent<HealthManager>().DamageCharacter(damage);
         }
     }
 }

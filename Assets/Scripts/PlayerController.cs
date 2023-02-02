@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private bool isRoll;
     private bool isSpin;
 
+    //Particles
+
 
     private void Start()
     {
@@ -105,7 +107,6 @@ public class PlayerController : MonoBehaviour
                 _speed = normalSpeed;
                 animator.SetBool("isSprint", false);
                 PlayerRegenStamina();
-                
             }
         }
         else

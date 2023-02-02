@@ -2623,8 +2623,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8761040118227664432}
   m_LocalRotation: {x: 0.5, y: -0.49999994, z: -0.5, w: -0.5}
-  m_LocalPosition: {x: 0.5919534, y: 0.6192205, z: 0.5790002}
-  m_LocalScale: {x: 0.69064045, y: 0.69064045, z: 0.69064045}
+  m_LocalPosition: {x: 0, y: 0.572, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8855052669661678444}
@@ -2643,6 +2643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slashSword: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826,
+    type: 3}
+  slashSpin: {fileID: 3802302459956397562, guid: b3416c8b2e3c7804b8c061dc4a36fc43,
     type: 3}
 --- !u!1 &9105106661575754179
 GameObject:

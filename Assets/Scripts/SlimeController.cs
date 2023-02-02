@@ -7,18 +7,27 @@ public class SlimeController : MonoBehaviour
     public float slimeSpeed = 5;
 
     public Rigidbody slimeRigidbody;
-    public Vector3 moveDirection;
+    private Vector3 moveDirection;
 
-    public float knockbackForce = 700;
+    private float knockbackForce = 300;
 
     public GameObject target; //drag and stop player object in the inspector
     public float followRange;
-    public float attackRange;
+    private float attackRange = 3;
+
+
+    [SerializeField] ParticleSystem hitParticle;
+
+    //Animations
+
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         target = GameObject.Find("MaleCharacterPBR");
+        
+
     }
 
     // Update is called once per frame
@@ -36,10 +45,14 @@ public class SlimeController : MonoBehaviour
 
         if(dist <= attackRange)
         {
+            
             transform.LookAt(target.transform);
             attack();
         }
-
+        else
+        {
+            animator.SetBool("isAttacking", false);
+        }
 
     }
 
@@ -49,11 +62,23 @@ public class SlimeController : MonoBehaviour
         {
             moveDirection =  slimeRigidbody.transform.position - attack.transform.position;
             slimeRigidbody.AddForce(moveDirection.normalized * knockbackForce);
+            SpawnHitParticle();
+            animator.SetBool("isHitting", true);
         }
     }
 
     public void attack()
     {
+        animator.SetBool("isAttacking", true);
+        
+    }
 
+    void SpawnHitParticle()
+    {
+        ParticleSystem newParticleSystem = Instantiate(hitParticle, transform.position, transform.rotation);
+
+        newParticleSystem.Play();
+
+        Destroy(newParticleSystem.gameObject, 1f);
     }
 }
