@@ -6,7 +6,8 @@ using UnityEngine.VFX;
 public class VisualEffectSpawner : MonoBehaviour
 {
 
-    [SerializeField] VisualEffect slashEffect;
+    [SerializeField] ParticleSystem slashSword;
+
 
     private PlayerController playerControllerScript;
 
@@ -22,26 +23,23 @@ public class VisualEffectSpawner : MonoBehaviour
 
         if (playerControllerScript.hasAttacked)
         {
-            SpawnEffect();
+            SpawnSlash();
             playerControllerScript.hasAttacked = false;
         }
 
         if (playerControllerScript.hasSpinned)
         {
-            SpawnEffect();
-            Invoke("SpawnEffect", 0.2f);
-            Invoke("SpawnEffect", 0.4f);
             playerControllerScript.hasSpinned = false;
         }
 
     }
 
-    void SpawnEffect()
+    void SpawnSlash()
     {
-        VisualEffect newBurstEffect = Instantiate(slashEffect, transform.position, transform.rotation);
+        ParticleSystem newParticleSystem = Instantiate(slashSword, transform.position, transform.rotation);
         
-        newBurstEffect.Play();
+        newParticleSystem.Play();
         
-        Destroy(newBurstEffect.gameObject, 1f);
+        Destroy(newParticleSystem.gameObject, 1f);
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
-    private float _speed;
+    public float _speed;
     [SerializeField] private float _turnSpeed = 360;
     private Vector3 _input;
 
@@ -19,19 +19,18 @@ public class PlayerController : MonoBehaviour
     public bool hasSpinned;
 
     //Stats
-    public float currentEnergy;
-    public float maxEnergy;
+    public bool isTired;
     [SerializeField] StaminaBar staminaBar;
 
     //Animations
     public Animator animator;
     public bool isMoving;
 
-    public bool isWalk;
-    public bool isRun;
-    public bool isAttack;
-    public bool isRoll;
-    public bool isSpin;
+    private bool isWalk;
+    private bool isRun;
+    private bool isAttack;
+    private bool isRoll;
+    private bool isSpin;
 
 
     private void Start()
@@ -39,8 +38,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         canMove = true;
         canRoll = true;
-        maxEnergy = 100;
-        currentEnergy = maxEnergy;
+        isTired = false;
     }
 
     private void Update()
@@ -49,21 +47,28 @@ public class PlayerController : MonoBehaviour
         Look();
         //PlayerRegenStamina();
 
+        if(GameManager.gameManager.playerStamina.Stamina < 1)
+        {
+            isTired = true;
+        }
+        if (GameManager.gameManager.playerStamina.Stamina > 20)
+        {
+            isTired = false;
+        }
 
         //Walk
         if (_input != Vector3.zero)
-        {
-           
+        {  
             animator.SetBool("isMoving", true);
         }
         else
         {
             animator.SetBool("isMoving", false);
-            //InvokeRepeating("RestoreEnergy", 1f, 1f);
+            
         }
 
         //Roll
-        if (Input.GetKeyDown(KeyCode.Space) && currentEnergy != 0 && !isRoll)
+        if (Input.GetKeyDown(KeyCode.Space) && !isRoll)
         {
             isRoll = true;
             isWalk = false;
@@ -71,9 +76,9 @@ public class PlayerController : MonoBehaviour
             isAttack = false;
             isSpin = false;
 
-            if (isRoll)
+            if (isRoll && !isTired)
             {
-
+                PlayerUseInstantStamina(40f);
                 animator.SetBool("isRolling", true);
                 transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
                 Invoke(nameof(DelayedCanMove), 0.4f);
@@ -82,22 +87,38 @@ public class PlayerController : MonoBehaviour
    
 
         //Sprint
-        if (Input.GetKey(KeyCode.LeftShift))
+
+        if(GameManager.gameManager.playerStamina.Stamina > 0 && !isTired)
         {
-            if(!isRoll && !isSpin && !isAttack)
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                _speed = sprintSpeed;
-                animator.SetBool("isSprint", true);
+                if(!isRoll && !isSpin && !isAttack)
+                {
+                    _speed = sprintSpeed;
+                    animator.SetBool("isSprint", true);
+                    PlayerUseStamina(20f);
+                    Debug.Log("Sprint");
+                }
+            }
+            else
+            {
+                _speed = normalSpeed;
+                animator.SetBool("isSprint", false);
+                PlayerRegenStamina();
+                
             }
         }
         else
         {
-            _speed = normalSpeed;
             animator.SetBool("isSprint", false);
+            _speed = normalSpeed;
+            PlayerRegenStamina();
+
         }
+        
 
         //Attack
-        if (Input.GetKeyDown(KeyCode.Mouse0) && currentEnergy != 0 && !isAttack)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttack)
         {
             isRoll = false;
             isWalk = false;
@@ -105,14 +126,15 @@ public class PlayerController : MonoBehaviour
             isAttack = true;
             isSpin = false;
             
-            if (isAttack)
+            if (isAttack && !isTired)
             {
                 animator.SetBool("isAttacking", true);
+                PlayerUseInstantStamina(20f);
                 hasAttacked = true;
                 Invoke(nameof(DelayedCanMove), 0.2f);
             }
         }
-
+        /*
         if (Input.GetKey(KeyCode.Mouse1))
         {
             //canMove = false;
@@ -122,10 +144,10 @@ public class PlayerController : MonoBehaviour
         {
             Invoke(nameof(DelayedCanMove), 0.4f);
             animator.SetBool("isBlocking", false);
-        }
+        }*/
 
         //Spin
-        if (Input.GetKeyDown(KeyCode.Mouse2) && currentEnergy != 0 && !isSpin)
+        if (Input.GetKeyDown(KeyCode.Mouse2) && !isSpin)
         {
             isRoll = false;
             isWalk = false;
@@ -133,9 +155,10 @@ public class PlayerController : MonoBehaviour
             isAttack = false;
             isSpin = true;
 
-            if (isSpin)
+            if (isSpin && !isTired)
             {
                 hasSpinned = true;
+                PlayerUseInstantStamina(40f);
                 animator.SetBool("isSpinning", true); 
                 Invoke(nameof(DelayedCanMove), 0.2f);           
             }         
@@ -188,15 +211,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void RestoreEnergy(int energySpeed)
-    {
-        currentEnergy = (currentEnergy + 5)*energySpeed;
-        
-    }
     
-    private void PlayerUseStamina(float staminaAmount)
+    private void PlayerUseStamina(float _staminaAmount)
     {
-        GameManager.gameManager.playerStamina.UseStamina(staminaAmount);
+        GameManager.gameManager.playerStamina.UseStamina(_staminaAmount);
+        staminaBar.SetStamina(GameManager.gameManager.playerStamina.Stamina);
+    }
+    private void PlayerUseInstantStamina(float _staminaAmount)
+    {
+        GameManager.gameManager.playerStamina.UseInstantStamina(_staminaAmount);
         staminaBar.SetStamina(GameManager.gameManager.playerStamina.Stamina);
     }
     private void PlayerRegenStamina()

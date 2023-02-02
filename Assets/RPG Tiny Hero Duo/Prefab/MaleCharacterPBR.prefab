@@ -2393,6 +2393,7 @@ Transform:
   - {fileID: 4052450133362360554}
   - {fileID: 4651028323595200166}
   - {fileID: 4682473949907222776}
+  - {fileID: 4294660126928567846}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2443,7 +2444,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!114 &5709584032851352174
 MonoBehaviour:
@@ -2458,11 +2459,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rb: {fileID: 641831762}
-  _turnSpeed: 360
+  _speed: 0
+  _turnSpeed: 1000
   canMove: 0
   canRoll: 0
-  isAttacking: 0
   hasAttacked: 0
+  hasSpinned: 0
+  isTired: 0
+  staminaBar: {fileID: 0}
   animator: {fileID: 9036980633323257398}
   isMoving: 0
 --- !u!1 &8206070634150816031
@@ -2594,6 +2598,52 @@ Transform:
   m_Father: {fileID: 2812306654539247274}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8761040118227664432
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4294660126928567846}
+  - component: {fileID: 8279793538972240457}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4294660126928567846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761040118227664432}
+  m_LocalRotation: {x: 0.5, y: -0.49999994, z: -0.5, w: -0.5}
+  m_LocalPosition: {x: 0.5919534, y: 0.6192205, z: 0.5790002}
+  m_LocalScale: {x: 0.69064045, y: 0.69064045, z: 0.69064045}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8855052669661678444}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 90}
+--- !u!114 &8279793538972240457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8761040118227664432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5bdda9e9ff78cc46ae0106069afba91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slashSword: {fileID: 6710139492206580334, guid: 95b8d3d65b5d7f1409c4ed1723887826,
+    type: 3}
 --- !u!1 &9105106661575754179
 GameObject:
   m_ObjectHideFlags: 0

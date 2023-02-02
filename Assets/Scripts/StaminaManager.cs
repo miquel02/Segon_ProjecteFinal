@@ -76,11 +76,19 @@ public class StaminaManager
         }
     }
 
+    public void UseInstantStamina(float _staminaAmount)
+    {
+        if (currentStamina > 0)
+        {
+            currentStamina -= _staminaAmount;
+        }
+    }
+
     public void RegenStamina()
     {
-        if (currentStamina < maxStamina && pauseStaminaRegen)
+        if (currentStamina < maxStamina && !pauseStaminaRegen)
         {
-            currentStamina -= staminaRegenSpeed * Time.deltaTime;
+            currentStamina += staminaRegenSpeed * Time.deltaTime;
         }
     }
 }
