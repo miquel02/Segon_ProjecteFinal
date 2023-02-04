@@ -48,12 +48,19 @@ public class SlimeController : MonoBehaviour
             
             transform.LookAt(target.transform);
             attack();
+            Invoke(nameof(DelayedCanMove), 0.2f);
         }
         else
         {
             animator.SetBool("isAttacking", false);
         }
 
+        if (gameObject.GetComponent<HealthManager>().currentHealth <= 0)
+        {
+            animator.SetBool("isDead", true);
+            animator.SetBool("isAttacking", false);
+            animator.SetBool("isHitting", false);
+        }
     }
 
     void OnTriggerEnter(Collider attack)
@@ -64,6 +71,7 @@ public class SlimeController : MonoBehaviour
             slimeRigidbody.AddForce(moveDirection.normalized * knockbackForce);
             SpawnHitParticle();
             animator.SetBool("isHitting", true);
+            Invoke(nameof(DelayedCanMove), 0.2f);
         }
     }
 
@@ -80,5 +88,11 @@ public class SlimeController : MonoBehaviour
         newParticleSystem.Play();
 
         Destroy(newParticleSystem.gameObject, 1f);
+    }
+
+    public void DelayedCanMove()
+    {
+        animator.SetBool("isAttacking", false);
+        animator.SetBool("isHitting", false);
     }
 }

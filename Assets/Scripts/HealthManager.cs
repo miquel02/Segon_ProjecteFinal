@@ -30,7 +30,7 @@ public class HealthManager : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject, 1.5f);
             SpawnDiParticle();
         }
 

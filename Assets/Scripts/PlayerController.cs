@@ -56,6 +56,11 @@ public class PlayerController : MonoBehaviour
         if (GameManager.gameManager.playerStamina.Stamina > 20)
         {
             isTired = false;
+            isRoll = false;
+            isWalk = false;
+            isRun = false;
+            isAttack = false;
+            isSpin = false;
         }
 
         //Walk
