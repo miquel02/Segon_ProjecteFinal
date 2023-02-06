@@ -13,10 +13,12 @@ public class SlimeController : MonoBehaviour
 
     public GameObject target; //drag and stop player object in the inspector
     public float followRange;
-    private float attackRange = 3;
+    private float attackRange = 1.4f;
+    public bool isAttacking;
 
-
+    //Particles
     [SerializeField] ParticleSystem hitParticle;
+    [SerializeField] ParticleSystem attackParticle;
 
     //Animations
 
@@ -33,16 +35,13 @@ public class SlimeController : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        //get the distance between the player and enemy (t$$anonymous$$s object)
         float dist = Vector3.Distance(target.transform.position, transform.position);
-        //check if it is wit$$anonymous$$n the range you set
-        if (dist <= followRange){
-            //move to target(player) 
+
+        if (dist <= followRange && dist >= attackRange)
+        {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, slimeSpeed);
             transform.LookAt(target.transform);
         }
-        //else, if it is not in rage, it will not follow player
-
         if(dist <= attackRange)
         {
             
@@ -63,6 +62,7 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    //Gets hit
     void OnTriggerEnter(Collider attack)
     {
         if (attack.gameObject.tag == "Weapon")
@@ -75,9 +75,21 @@ public class SlimeController : MonoBehaviour
         }
     }
 
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player") && isAttacking && AnimatorIsPlaying("Attack01"))
+        {
+            other.gameObject.GetComponent<PlayerController>().PlayerTakeDmg(20);
+            isAttacking = false;
+            SpawnAttackParticle();
+        }
+    }
+
+    //Attacks player
     public void attack()
     {
         animator.SetBool("isAttacking", true);
+        isAttacking = true;
         
     }
 
@@ -89,10 +101,24 @@ public class SlimeController : MonoBehaviour
 
         Destroy(newParticleSystem.gameObject, 1f);
     }
+    void SpawnAttackParticle()
+    {
+        ParticleSystem newParticleSystem = Instantiate(attackParticle, transform.position, transform.rotation);
+
+        newParticleSystem.Play();
+
+        Destroy(newParticleSystem.gameObject, 1f);
+    }
 
     public void DelayedCanMove()
     {
         animator.SetBool("isAttacking", false);
         animator.SetBool("isHitting", false);
+    }
+
+    bool AnimatorIsPlaying(string stateName)
+    {
+        return 0.9f < animator.GetCurrentAnimatorStateInfo(0).normalizedTime &&
+            animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 }

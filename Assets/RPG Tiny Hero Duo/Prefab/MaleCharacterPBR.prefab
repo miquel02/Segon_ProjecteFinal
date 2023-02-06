@@ -2371,7 +2371,7 @@ GameObject:
   - component: {fileID: 5709584032851352174}
   m_Layer: 0
   m_Name: MaleCharacterPBR
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2467,6 +2467,7 @@ MonoBehaviour:
   hasSpinned: 0
   isTired: 0
   staminaBar: {fileID: 0}
+  healthBar: {fileID: 0}
   animator: {fileID: 9036980633323257398}
   isMoving: 0
 --- !u!1 &8206070634150816031

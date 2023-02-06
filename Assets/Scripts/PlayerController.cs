@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     //Stats
     public bool isTired;
     [SerializeField] StaminaBar staminaBar;
+    [SerializeField] HealthBar healthBar;
 
     //Animations
     public Animator animator;
@@ -89,6 +90,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("isRolling", true);
                 transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
                 Invoke(nameof(DelayedCanMove), 0.4f);
+                PlayerTakeDmg(20);
             }    
         }
    
@@ -217,7 +219,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+
     private void PlayerUseStamina(float _staminaAmount)
     {
         GameManager.gameManager.playerStamina.UseStamina(_staminaAmount);
@@ -234,7 +236,17 @@ public class PlayerController : MonoBehaviour
         staminaBar.SetStamina(GameManager.gameManager.playerStamina.Stamina);
     }
     
+    public void PlayerTakeDmg(int _dmg)
+    {
+        GameManager.gameManager.playerHealth.DamageUnit(_dmg);
+        healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
+    }
 
+    private void PlayerTakeHeal(int _heal)
+    {
+        GameManager.gameManager.playerHealth.HealUnit(_heal);
+        healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
+    }
 }
 
 public static class Helpers
