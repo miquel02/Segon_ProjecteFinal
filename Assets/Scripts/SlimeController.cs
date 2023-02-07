@@ -75,12 +75,12 @@ public class SlimeController : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && isAttacking && AnimatorIsPlaying("Attack01"))
+        if (other.gameObject.CompareTag("Player") && isAttacking && AnimatorIsPlaying("Attack01") )
         {
+            StartCoroutine(AttackCoolDown());
             other.gameObject.GetComponent<PlayerController>().PlayerTakeDmg(20);
-            isAttacking = false;
             SpawnAttackParticle();
         }
     }
@@ -89,8 +89,6 @@ public class SlimeController : MonoBehaviour
     public void attack()
     {
         animator.SetBool("isAttacking", true);
-        isAttacking = true;
-        
     }
 
     void SpawnHitParticle()
@@ -103,7 +101,7 @@ public class SlimeController : MonoBehaviour
     }
     void SpawnAttackParticle()
     {
-        ParticleSystem newParticleSystem = Instantiate(attackParticle, transform.position, transform.rotation);
+        ParticleSystem newParticleSystem = Instantiate(attackParticle, transform.position + transform.forward, transform.rotation);
 
         newParticleSystem.Play();
 
@@ -118,7 +116,14 @@ public class SlimeController : MonoBehaviour
 
     bool AnimatorIsPlaying(string stateName)
     {
-        return 0.9f < animator.GetCurrentAnimatorStateInfo(0).normalizedTime &&
+        return 0.5f < animator.GetCurrentAnimatorStateInfo(0).normalizedTime &&
             animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
+    }
+
+    IEnumerator AttackCoolDown()
+    {
+        isAttacking = false;
+        yield return new WaitForSeconds(2);
+        isAttacking = true;
     }
 }
