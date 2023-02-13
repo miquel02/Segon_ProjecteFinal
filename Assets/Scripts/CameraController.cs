@@ -5,16 +5,20 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
-    public GameObject[] cameraObjective;
+    public Transform cameraObjective;
 
     public int cameraTarget;
     public bool camOnPlayer;
+
+    public Transform Obstruction;
+    float zoomSpeed = 2;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        Obstruction = cameraObjective;
         cameraTarget = 0;
         camOnPlayer = true;
     }
@@ -38,6 +42,33 @@ public class CameraController : MonoBehaviour
         //Vector3 pos = cameraObjective.transform.position;
         //pos.z += cameraHeight;
         //transform.position = pos;
-        transform.position = Vector3.MoveTowards(transform.position, cameraObjective[cameraTarget].transform.position, 0.03f);
+        transform.position = Vector3.MoveTowards(transform.position, cameraObjective.transform.position, 0.03f);
+    }
+
+    void ViewObstructed()
+    {
+        RaycastHit hit;
+
+        if(Physics.Raycast(transform.position, cameraObjective.position - transform.position, out hit, 4.5f))
+        {
+            if(hit.collider.gameObject.tag != "Player")
+            {
+                Obstruction = hit.transform;
+                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                if(Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, cameraObjective.position) >= 1.5f)
+                {
+                    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
+                }
+
+            }
+            else
+            {
+                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                if(Vector3.Distance(transform.position, cameraObjective.position) < 4.5f)
+                {
+                    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
+                }
+            }
+        }
     }
 }

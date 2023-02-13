@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private float normalSpeed = 6;
     private float sprintSpeed = 10;
-    private float rollSpeed = 30;
+    private float rollSpeed = 1000;
 
     public bool canMove;
     public bool canRoll;

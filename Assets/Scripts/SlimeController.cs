@@ -14,7 +14,7 @@ public class SlimeController : MonoBehaviour
     public GameObject target; //drag and stop player object in the inspector
     public float followRange;
     private float attackRange = 1.4f;
-    public bool isAttacking;
+    private bool isAttacking;
 
     //Particles
     [SerializeField] ParticleSystem hitParticle;
@@ -28,7 +28,7 @@ public class SlimeController : MonoBehaviour
     void Start()
     {
         target = GameObject.Find("MaleCharacterPBR");
-        
+        isAttacking = true;
 
     }
 
