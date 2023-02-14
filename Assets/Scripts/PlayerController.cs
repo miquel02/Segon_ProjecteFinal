@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
     private float normalSpeed = 6;
     private float sprintSpeed = 10;
-    private float rollSpeed = 1000;
+    private float rollSpeed = 200;
 
     public bool canMove;
     public bool canRoll;
@@ -88,9 +88,11 @@ public class PlayerController : MonoBehaviour
             {
                 PlayerUseInstantStamina(40f);
                 animator.SetBool("isRolling", true);
-                transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+                StartCoroutine(RollTimer());
+                
                 Invoke(nameof(DelayedCanMove), 0.4f);
                 PlayerTakeDmg(20);
+                Debug.Log("Rodar");
             }    
         }
    
@@ -246,6 +248,12 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.gameManager.playerHealth.HealUnit(_heal);
         healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
+    }
+
+    IEnumerator RollTimer()
+    {   yield return new WaitForSeconds(2);
+        transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+        
     }
 }
 

@@ -42,7 +42,12 @@ public class CameraController : MonoBehaviour
         //Vector3 pos = cameraObjective.transform.position;
         //pos.z += cameraHeight;
         //transform.position = pos;
-        transform.position = Vector3.MoveTowards(transform.position, cameraObjective.transform.position, 0.03f);
+        transform.position = Vector3.MoveTowards(transform.position, cameraObjective.transform.position /*new Vector3(0,3,-3)*/, 0.03f);
+    }
+
+    void LateUpdate()
+    {
+        ViewObstructed();
     }
 
     void ViewObstructed()
@@ -54,19 +59,29 @@ public class CameraController : MonoBehaviour
             if(hit.collider.gameObject.tag != "Player")
             {
                 Obstruction = hit.transform;
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                if(Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, cameraObjective.position) >= 1.5f)
+                MeshRenderer mesh = Obstruction.gameObject.GetComponent<MeshRenderer>();
+                if(mesh != null)
                 {
-                    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
+                    mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                    if(Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, cameraObjective.position) >= 1.5f)
+                    {
+                        transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
+                    }
+
                 }
+                
 
             }
             else
             {
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                if(Vector3.Distance(transform.position, cameraObjective.position) < 4.5f)
+                MeshRenderer mesh = Obstruction.gameObject.GetComponent<MeshRenderer>();
+                if (mesh != null)
                 {
-                    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
+                    mesh.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    if (Vector3.Distance(transform.position, cameraObjective.position) < 4.5f)
+                    {
+                        transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
+                    }
                 }
             }
         }
