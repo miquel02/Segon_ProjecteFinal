@@ -62,6 +62,7 @@ public class WavesManager : MonoBehaviour
         {
             currWave++;
             GenerateWave();
+            Debug.Log(0);
         }
     }
 

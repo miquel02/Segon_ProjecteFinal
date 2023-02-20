@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Weapon
   - FxTemporaire
+  - Bala
   layers:
   - Default
   - TransparentFX
