@@ -629,7 +629,8 @@ GameObject:
   - component: {fileID: 7487410016649246973}
   - component: {fileID: 430532668789701216}
   - component: {fileID: 6987101692914003809}
-  - component: {fileID: 303854005980433817}
+  - component: {fileID: 1178481904}
+  - component: {fileID: 3790429326950006945}
   m_Layer: 0
   m_Name: BeholderPBR
   m_TagString: Untagged
@@ -690,6 +691,7 @@ MonoBehaviour:
   slimeRigidbody: {fileID: 6987101692914003809}
   target: {fileID: 0}
   followRange: 10
+  isAttacking: 0
   hitParticle: {fileID: 19800002, guid: 1c20c7996d683754db1f0f62a361952c, type: 3}
   attackParticle: {fileID: 19800004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
   shootPivot: {fileID: 5036009940391946182}
@@ -711,8 +713,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!65 &303854005980433817
-BoxCollider:
+--- !u!114 &1178481904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7487410016656624447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ff485175743d24180dec1fc280f612, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  expWhenDefeated: 0
+  rigidBody: {fileID: 6987101692914003809}
+  dieParticle: {fileID: 0}
+--- !u!135 &3790429326950006945
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -722,8 +741,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.9555664, y: 1.5157186, z: 1}
-  m_Center: {x: 0.0111198425, y: 0.20730728, z: 0}
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7487410016656624449
 GameObject:
   m_ObjectHideFlags: 0

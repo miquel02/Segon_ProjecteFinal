@@ -5,6 +5,8 @@ using UnityEngine;
 public class WavesManager : MonoBehaviour
 {
 
+    public static WavesManager waveManager;
+
     public List<Enemy> enemies = new List<Enemy>();
     public int currWave;
     private int waveValue;
@@ -19,6 +21,19 @@ public class WavesManager : MonoBehaviour
     private float spawnTimer;
 
     public List<GameObject> spawnedEnemies = new List<GameObject>();
+
+
+    void Awake()
+    {
+        if (waveManager != null && waveManager != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            waveManager = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {

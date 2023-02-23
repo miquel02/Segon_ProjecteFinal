@@ -14,7 +14,8 @@ public class BeholderController : MonoBehaviour
     public GameObject target; //drag and stop player object in the inspector
     public float followRange;
     private float attackRange = 5f;
-    private bool isAttacking;
+    private float backRange = 4;
+    public bool isAttacking;
 
     //Particles
     [SerializeField] ParticleSystem hitParticle;
@@ -51,6 +52,17 @@ public class BeholderController : MonoBehaviour
             transform.LookAt(target.transform);
             attack();
             Invoke(nameof(DelayedCanMove), 0.2f);
+        }
+        else
+        {
+            animator.SetBool("isAttacking", false);
+        }
+        if (dist <= backRange)
+        {
+
+            transform.LookAt(target.transform);
+            Vector3 FarFromPlayer = transform.position - target.transform.position;
+            transform.Translate (FarFromPlayer * slimeSpeed* Time.deltaTime );
         }
         else
         {
@@ -93,8 +105,13 @@ public class BeholderController : MonoBehaviour
     //Attacks player
     public void attack()
     {
-        animator.SetBool("isAttacking", true);
         
+        if(isAttacking)
+        {
+            animator.SetBool("isAttacking", true);
+            StartCoroutine(AttackCoolDown());
+
+        }
     }
 
     void SpawnHitParticle()
@@ -137,5 +154,6 @@ public class BeholderController : MonoBehaviour
         isAttacking = false;
         yield return new WaitForSeconds(2);
         isAttacking = true;
+        SpawnAttackBala();
     }
 }

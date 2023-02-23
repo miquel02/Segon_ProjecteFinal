@@ -30,6 +30,7 @@ public class HealthManager : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
+            WavesManager.waveManager.spawnedEnemies.Remove(gameObject);
             Destroy(gameObject, 1.5f);
             SpawnDiParticle();
         }
