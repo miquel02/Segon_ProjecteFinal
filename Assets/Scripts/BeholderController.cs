@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BeholderController : MonoBehaviour
 {
-    private float slimeSpeed = 0.01f;
+    private float slimeSpeed = 0.05f;
 
     public Rigidbody slimeRigidbody;
     private Vector3 moveDirection;
@@ -14,7 +14,7 @@ public class BeholderController : MonoBehaviour
     public GameObject target; //drag and stop player object in the inspector
     public float followRange;
     private float attackRange = 5f;
-    private float backRange = 4;
+    private float backRange = 5;
     public bool isAttacking;
 
     //Particles
@@ -75,8 +75,11 @@ public class BeholderController : MonoBehaviour
             animator.SetBool("isAttacking", false);
             animator.SetBool("isHitting", false);
         }
+
+        
     }
 
+    
     //Gets hit
     void OnTriggerEnter(Collider attack)
     {

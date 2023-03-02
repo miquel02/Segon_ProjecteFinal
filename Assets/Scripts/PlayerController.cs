@@ -9,14 +9,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _turnSpeed = 360;
     private Vector3 _input;
 
-    private float normalSpeed = 6;
-    private float sprintSpeed = 10;
+    private float normalSpeed = 20;
+    private float sprintSpeed = 40;
     private float rollSpeed = 200;
 
     public bool canMove;
     public bool canRoll;
     public bool hasAttacked;
     public bool hasSpinned;
+
+    public Transform orientation;
+
+    float horizontalInput;
+    float verticalInput;
+
+    Vector3 moveDirection;
 
     //Stats
     public bool isTired;
@@ -42,15 +49,19 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         canRoll = true;
         isTired = false;
+
+        _rb = GetComponent<Rigidbody>();
+        _rb.freezeRotation = true;
     }
 
     private void Update()
     {
-        GatherInput();
-        Look();
+        //GatherInput();
+        //Look();
+        MyInput();
         //PlayerRegenStamina();
 
-        if(GameManager.gameManager.playerStamina.Stamina < 1)
+        if (GameManager.gameManager.playerStamina.Stamina < 1)
         {
             isTired = true;
         }
@@ -65,7 +76,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Walk
-        if (_input != Vector3.zero)
+        if (horizontalInput != Vector3.zero)
         {  
             animator.SetBool("isMoving", true);
         }
@@ -175,11 +186,6 @@ public class PlayerController : MonoBehaviour
         }       
     }
 
-    void LateUpdate()
-    {
-
-    }
-
     private void FixedUpdate()
     {
         if (canMove)
@@ -187,23 +193,28 @@ public class PlayerController : MonoBehaviour
             Move();
         }  
     }
-    private void GatherInput()
-    {
-        _input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
 
-    }
-
-    private void Look()
+    /*private void Look()
     {
         if (_input == Vector3.zero) return;
 
         var rot = Quaternion.LookRotation(_input.ToIso(), Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, _turnSpeed * Time.deltaTime);
-    }
+    }*/
 
+    private void MyInput()
+    {
+        horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
+    }
     private void Move()
     {
-        _rb.MovePosition(transform.position + transform.forward * _input.normalized.magnitude * _speed * Time.deltaTime);
+        //_rb.MovePosition(transform.position + transform.forward * _input.normalized.magnitude * _speed * Time.deltaTime);
+
+        // calculate movement direction
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+
+            _rb.AddForce(moveDirection.normalized * _speed * 10f, ForceMode.Force);
     }
     
     public void DelayedCanMove()
