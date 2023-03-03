@@ -12,6 +12,8 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         scenesManagerScript = GameObject.Find("Main Menu Manager").GetComponent<ScenesManager>();//Acces the scenes manager script
         Time.timeScale = 1;//Make sure the game is not paused
     }

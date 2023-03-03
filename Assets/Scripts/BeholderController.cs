@@ -119,7 +119,7 @@ public class BeholderController : MonoBehaviour
 
     void SpawnHitParticle()
     {
-        ParticleSystem newParticleSystem = Instantiate(hitParticle, transform.position, transform.rotation);
+        ParticleSystem newParticleSystem = Instantiate(hitParticle, shootPivot.transform.position, transform.rotation);
 
         newParticleSystem.Play();
 
@@ -127,7 +127,7 @@ public class BeholderController : MonoBehaviour
     }
     void SpawnAttackParticle()
     {
-        ParticleSystem newParticleSystem = Instantiate(attackParticle, transform.position + transform.forward, transform.rotation);
+        ParticleSystem newParticleSystem = Instantiate(attackParticle, shootPivot.transform.position + transform.forward, transform.rotation);
 
         newParticleSystem.Play();
 

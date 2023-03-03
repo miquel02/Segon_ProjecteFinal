@@ -5,40 +5,23 @@ using UnityEngine;
 public class MoveForward : MonoBehaviour
 {
     public float speed = 10;
-    public float rotateSpeed = 200;
-    private Rigidbody objectRigidbody;
-    public float upForce = 2;
 
-    //Cotxe
-    private float carSpeed = 10;
     private float zRangeCar = -20f;
 
-    //Plataforma
-    private float platformSpeed = 2;
-    private float yRangePlatform = -20f;
-
-    private float middlePlatformSpeed = 4;
-    private float yRangePlatformMiddle = 40f;
-
-    //Bolla pinxos
-    private float yRangeBolla = -20f;
-
-    //Granny
-    private float xRangeAttack = -40f;
-    private float yRangeAttack = -40f;
+    [SerializeField] ParticleSystem attackParticle;
 
 
     void Start()
     {
-        objectRigidbody = GetComponent<Rigidbody>();
+        
     }
     void Update()
     {
 
-        //Cotxe
+        
         if (CompareTag("Bala"))
         {
-            transform.Translate(Vector3.forward * carSpeed * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
         if (transform.position.y < zRangeCar && CompareTag("Bala"))
@@ -46,5 +29,25 @@ public class MoveForward : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            
+            other.gameObject.GetComponent<PlayerController>().PlayerTakeDmg(20);
+            SpawnAttackParticle();
+            Destroy(gameObject);
+        }
+    }
+
+    void SpawnAttackParticle()
+    {
+        ParticleSystem newParticleSystem = Instantiate(attackParticle, transform.position + transform.forward, transform.rotation);
+
+        newParticleSystem.Play();
+
+        Destroy(newParticleSystem.gameObject, 1f);
     }
 }

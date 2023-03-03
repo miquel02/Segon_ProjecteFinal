@@ -19,7 +19,7 @@ public class ScenesManager : MonoBehaviour
 
     public void GameOver()
     {
-        SceneManager.LoadScene("MG_GameOver");//Load game over scene
+        SceneManager.LoadScene("MainMenu");//Load game over scene
     }
     public void GameVictory()
     {

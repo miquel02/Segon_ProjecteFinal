@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool isTired;
     [SerializeField] StaminaBar staminaBar;
     [SerializeField] HealthBar healthBar;
+    public bool isDead;
 
     //Animations
     public Animator animator;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
         canRoll = true;
         isTired = false;
+        isDead = false;
 
         _rb = GetComponent<Rigidbody>();
         _rb.freezeRotation = true;
@@ -58,137 +60,161 @@ public class PlayerController : MonoBehaviour
     {
         //GatherInput();
         //Look();
+
         MyInput();
         //PlayerRegenStamina();
 
-        if (GameManager.gameManager.playerStamina.Stamina < 1)
+        if (!isDead)
         {
-            isTired = true;
-        }
-        if (GameManager.gameManager.playerStamina.Stamina > 20)
-        {
-            isTired = false;
-            isRoll = false;
-            isWalk = false;
-            isRun = false;
-            isAttack = false;
-            isSpin = false;
-        }
 
-        //Walk
-        if (horizontalInput != Vector3.zero)
-        {  
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-            
-        }
-
-        //Roll
-        if (Input.GetKeyDown(KeyCode.Space) && !isRoll)
-        {
-            isRoll = true;
-            isWalk = false;
-            isRun = false;
-            isAttack = false;
-            isSpin = false;
-
-            if (isRoll && !isTired)
+        
+            if (GameManager.gameManager.playerStamina.Stamina < 1)
             {
-                PlayerUseInstantStamina(40f);
-                animator.SetBool("isRolling", true);
-                StartCoroutine(RollTimer());
+                isTired = true;
+            }
+            if (GameManager.gameManager.playerStamina.Stamina > 20)
+            {
+                isTired = false;
+                isRoll = false;
+                isWalk = false;
+                isRun = false;
+                isAttack = false;
+                isSpin = false;
+            }
+
+            //Walk
+            if (horizontalInput != 0f || verticalInput != 0f)
+            {  
+                animator.SetBool("isMoving", true);
+            }
+            else
+            {
+                animator.SetBool("isMoving", false);
+            
+            }
+
+            //Roll
+            if (Input.GetKeyDown(KeyCode.Space) && !isRoll)
+            {
+                isRoll = true;
+                isWalk = false;
+                isRun = false;
+                isAttack = false;
+                isSpin = false;
+
+                if (isRoll && !isTired)
+                {
+                    PlayerUseInstantStamina(40f);
+                    animator.SetBool("isRolling", true);
+                    StartCoroutine(RollTimer());
                 
-                Invoke(nameof(DelayedCanMove), 0.4f);
-                PlayerTakeDmg(20);
-                Debug.Log("Rodar");
-            }    
-        }
+                    Invoke(nameof(DelayedCanMove), 0.4f);
+                    PlayerTakeDmg(20);
+                    Debug.Log("Rodar");
+                }    
+            }
    
 
-        //Sprint
+            //Sprint
 
-        if(GameManager.gameManager.playerStamina.Stamina > 0 && !isTired)
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if(GameManager.gameManager.playerStamina.Stamina > 0 && !isTired)
             {
-                if(!isRoll && !isSpin && !isAttack)
+                if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    _speed = sprintSpeed;
-                    animator.SetBool("isSprint", true);
-                    PlayerUseStamina(20f);
-                    Debug.Log("Sprint");
+                    if(!isRoll && !isSpin && !isAttack)
+                    {
+                        _speed = sprintSpeed;
+                        animator.SetBool("isSprint", true);
+                        PlayerUseStamina(20f);
+                        Debug.Log("Sprint");
+                    }
+                }
+                else
+                {
+                    _speed = normalSpeed;
+                    animator.SetBool("isSprint", false);
+                    PlayerRegenStamina();
                 }
             }
             else
             {
-                _speed = normalSpeed;
                 animator.SetBool("isSprint", false);
+                _speed = normalSpeed;
                 PlayerRegenStamina();
+
+            }
+        
+
+            //Attack
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttack)
+            {
+                isRoll = false;
+                isWalk = false;
+                isRun = false;
+                isAttack = true;
+                isSpin = false;
+            
+                if (isAttack && !isTired)
+                {
+                    animator.SetBool("isAttacking", true);
+                    PlayerUseInstantStamina(20f);
+                    hasAttacked = true;
+                    Invoke(nameof(DelayedCanMove), 0.2f);
+                }
+            }
+            /*
+            if (Input.GetKey(KeyCode.Mouse1))
+            {
+                //canMove = false;
+                animator.SetBool("isBlocking", true);
+            }
+            else if (!canMove)
+            {
+                Invoke(nameof(DelayedCanMove), 0.4f);
+                animator.SetBool("isBlocking", false);
+            }*/
+
+            //Spin
+            if (Input.GetKeyDown(KeyCode.Mouse2) && !isSpin)
+            {
+                isRoll = false;
+                isWalk = false;
+                isRun = false;
+                isAttack = false;
+                isSpin = true;
+
+                if (isSpin && !isTired)
+                {
+                    hasSpinned = true;
+                    PlayerUseInstantStamina(40f);
+                    animator.SetBool("isSpinning", true); 
+                    Invoke(nameof(DelayedCanMove), 0.2f);           
+                }         
+            }   
+        
+            //Dies
+            if(GameManager.gameManager.playerHealth.currentHealth <= 0)
+            {
+
+                isRoll = false;
+                isWalk = false;
+                isRun = false;
+                isAttack = false;
+                isSpin = false;
+                animator.SetBool("IsDying", true);
+                Debug.Log("dead");
+                isDead = true;
             }
         }
         else
         {
-            animator.SetBool("isSprint", false);
-            _speed = normalSpeed;
-            PlayerRegenStamina();
-
+            GameManager.gameManager.gameOver = true;
         }
-        
-
-        //Attack
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttack)
-        {
-            isRoll = false;
-            isWalk = false;
-            isRun = false;
-            isAttack = true;
-            isSpin = false;
-            
-            if (isAttack && !isTired)
-            {
-                animator.SetBool("isAttacking", true);
-                PlayerUseInstantStamina(20f);
-                hasAttacked = true;
-                Invoke(nameof(DelayedCanMove), 0.2f);
-            }
-        }
-        /*
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            //canMove = false;
-            animator.SetBool("isBlocking", true);
-        }
-        else if (!canMove)
-        {
-            Invoke(nameof(DelayedCanMove), 0.4f);
-            animator.SetBool("isBlocking", false);
-        }*/
-
-        //Spin
-        if (Input.GetKeyDown(KeyCode.Mouse2) && !isSpin)
-        {
-            isRoll = false;
-            isWalk = false;
-            isRun = false;
-            isAttack = false;
-            isSpin = true;
-
-            if (isSpin && !isTired)
-            {
-                hasSpinned = true;
-                PlayerUseInstantStamina(40f);
-                animator.SetBool("isSpinning", true); 
-                Invoke(nameof(DelayedCanMove), 0.2f);           
-            }         
-        }       
     }
 
     private void FixedUpdate()
     {
-        if (canMove)
+        if (canMove && !isDead)
         {
             Move();
         }  
@@ -209,12 +235,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Move()
     {
-        //_rb.MovePosition(transform.position + transform.forward * _input.normalized.magnitude * _speed * Time.deltaTime);
+      
+            //_rb.MovePosition(transform.position + transform.forward * _input.normalized.magnitude * _speed * Time.deltaTime);
 
-        // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+            // calculate movement direction
+            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-            _rb.AddForce(moveDirection.normalized * _speed * 10f, ForceMode.Force);
+                _rb.AddForce(moveDirection.normalized * _speed * 10f, ForceMode.Force);
+
     }
     
     public void DelayedCanMove()
