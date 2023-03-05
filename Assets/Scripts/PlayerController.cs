@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
+    [SerializeField] private Collider _Collider;
     public float _speed;
     [SerializeField] private float _turnSpeed = 360;
     private Vector3 _input;
 
     private float normalSpeed = 20;
     private float sprintSpeed = 40;
-    private float rollSpeed = 200;
+    private float rollSpeed = 100;
 
     public bool canMove;
     public bool canRoll;
@@ -51,8 +52,10 @@ public class PlayerController : MonoBehaviour
         canRoll = true;
         isTired = false;
         isDead = false;
+        _Collider.enabled = true;
 
         _rb = GetComponent<Rigidbody>();
+        _Collider = GetComponent<Collider>();
         _rb.freezeRotation = true;
     }
 
@@ -104,13 +107,12 @@ public class PlayerController : MonoBehaviour
 
                 if (isRoll && !isTired)
                 {
+                    _Collider.enabled = false;
                     PlayerUseInstantStamina(40f);
                     animator.SetBool("isRolling", true);
                     StartCoroutine(RollTimer());
-                
+                    //transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
                     Invoke(nameof(DelayedCanMove), 0.4f);
-                    PlayerTakeDmg(20);
-                    Debug.Log("Rodar");
                 }    
             }
    
@@ -125,7 +127,7 @@ public class PlayerController : MonoBehaviour
                     {
                         _speed = sprintSpeed;
                         animator.SetBool("isSprint", true);
-                        PlayerUseStamina(20f);
+                        PlayerUseStamina(5f);
                         Debug.Log("Sprint");
                     }
                 }
@@ -205,6 +207,12 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("dead");
                 isDead = true;
             }
+
+            if(DataPersistance.PlayerStats.numberPotions > 0 && Input.GetKeyDown(KeyCode.Q))
+            {
+                DataPersistance.PlayerStats.numberPotions--;
+                PlayerTakeHeal(30);
+            }
         }
         else
         {
@@ -256,6 +264,8 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isAttacking", false);
         animator.SetBool("isRolling", false);
         animator.SetBool("isSpinning", false);
+        _Collider.enabled = true;
+
 
 
     }
@@ -281,6 +291,8 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.gameManager.playerHealth.DamageUnit(_dmg);
         healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
+        animator.SetTrigger("isHit");
+        
     }
 
     private void PlayerTakeHeal(int _heal)
@@ -290,8 +302,10 @@ public class PlayerController : MonoBehaviour
     }
 
     IEnumerator RollTimer()
-    {   yield return new WaitForSeconds(2);
-        transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+    {   yield return new WaitForSeconds(0.2f);
+        _rb.AddForce(transform.forward * rollSpeed, ForceMode.Impulse);
+        //transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
+        Debug.Log("Rodar");
         
     }
 }

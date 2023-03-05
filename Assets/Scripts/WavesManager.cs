@@ -23,6 +23,8 @@ public class WavesManager : MonoBehaviour
     public List<GameObject> spawnedEnemies = new List<GameObject>();
 
 
+    private bool hasGivenPot;
+
     void Awake()
     {
         if (waveManager != null && waveManager != this)
@@ -77,8 +79,20 @@ public class WavesManager : MonoBehaviour
         {
             currWave++;
             GenerateWave();
-            Debug.Log(0);
+            //Debug.Log(0);
+
+            if(currWave % 2==0)
+            {
+                DataPersistance.PlayerStats.numberPotions++;
+            }
         }
+
+        if(currWave > DataPersistance.PlayerStats.maxWave)
+        {
+               DataPersistance.PlayerStats.maxWave=currWave;
+        }
+        DataPersistance.PlayerStats.currentWave = currWave ;
+
     }
 
     public void GenerateWave()

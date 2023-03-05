@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public bool gameOver;
 
+    public int maxWave;
+
     public static GameManager gameManager { get; private set; }
 
     public StaminaManager playerStamina = new StaminaManager(100f, 100f, 10f, false);

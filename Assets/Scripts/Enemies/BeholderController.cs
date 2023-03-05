@@ -51,6 +51,7 @@ public class BeholderController : MonoBehaviour
 
             transform.LookAt(target.transform);
             attack();
+            animator.SetBool("isAttacking", true);
             Invoke(nameof(DelayedCanMove), 0.2f);
         }
         else
@@ -95,7 +96,7 @@ public class BeholderController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") && isAttacking && AnimatorIsPlaying("Attack01"))
+        if (other.gameObject.CompareTag("Player") && isAttacking )
         {
             StartCoroutine(AttackCoolDown());
             other.gameObject.GetComponent<PlayerController>().PlayerTakeDmg(20);
@@ -109,11 +110,11 @@ public class BeholderController : MonoBehaviour
     public void attack()
     {
         
-        if(isAttacking)
+        if(isAttacking && AnimatorIsPlaying("Attack01"))
         {
-            animator.SetBool("isAttacking", true);
+            //animator.SetBool("isAttacking", true);
             StartCoroutine(AttackCoolDown());
-
+            isAttacking = false;
         }
     }
 
@@ -136,7 +137,6 @@ public class BeholderController : MonoBehaviour
 
     void SpawnAttackBala()
     {
-        Debug.Log("Disparo");
         Instantiate(bala, shootPivot.transform.position, transform.rotation);
     }
 
@@ -155,8 +155,14 @@ public class BeholderController : MonoBehaviour
     IEnumerator AttackCoolDown()
     {
         isAttacking = false;
-        yield return new WaitForSeconds(2);
+        StartCoroutine(BalaSpawnTimer());
+        yield return new WaitForSeconds(2f);
         isAttacking = true;
+        //SpawnAttackBala();
+    }
+    IEnumerator BalaSpawnTimer()
+    {
+        yield return new WaitForSeconds(0.2f);
         SpawnAttackBala();
     }
 }
