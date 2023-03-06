@@ -24,6 +24,7 @@ public class WavesManager : MonoBehaviour
 
 
     private bool hasGivenPot;
+    public ParticleSystem spawnParticle;
 
     void Awake()
     {
@@ -54,6 +55,7 @@ public class WavesManager : MonoBehaviour
                 enemiesToSpawn.RemoveAt(0); // and remove it
                 spawnedEnemies.Add(enemy);
                 spawnTimer = spawnInterval;
+                SpawnAttackParticle();
 
                 if (spawnIndex + 1 <= spawnLocation.Length - 1)
                 {
@@ -133,6 +135,8 @@ public class WavesManager : MonoBehaviour
             {
                 generatedEnemies.Add(enemies[randEnemyId].enemyPrefab);
                 waveValue -= randEnemyCost;
+                
+
             }
             else if (waveValue <= 0)
             {
@@ -142,7 +146,14 @@ public class WavesManager : MonoBehaviour
         enemiesToSpawn.Clear();
         enemiesToSpawn = generatedEnemies;
     }
+    void SpawnAttackParticle()
+    {
+        ParticleSystem newParticleSystem = Instantiate(spawnParticle, spawnLocation[spawnIndex].position, transform.rotation);
 
+        newParticleSystem.Play();
+
+        Destroy(newParticleSystem.gameObject, 1f);
+    }
 }
 
 [System.Serializable]

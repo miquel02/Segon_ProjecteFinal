@@ -548,6 +548,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 746157262824290715, guid: 6adef8e1420af2b46ae142b91bf73737,
         type: 3}
+      propertyPath: spawnParticle
+      value: 
+      objectReference: {fileID: 3280519133390621004, guid: a71be3e7990efb040a07565c43cbb198,
+        type: 3}
+    - target: {fileID: 746157262824290715, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
       propertyPath: enemies.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -582,6 +588,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7487410016656624447, guid: 9e6401f8e2320e54797a680db42d218f,
         type: 3}
+    - target: {fileID: 746157263352335573, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 48.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 746157263352335573, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 746157263352335573, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 25.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566831606777885419, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 45.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566831606777885419, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7566831606777885419, guid: 6adef8e1420af2b46ae142b91bf73737,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 42.92
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6adef8e1420af2b46ae142b91bf73737, type: 3}
 --- !u!4 &471561528 stripped

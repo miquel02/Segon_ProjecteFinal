@@ -17,6 +17,7 @@ public class GameUIManager : MonoBehaviour
     void Start()
     {
         wavesManagerScript = GameObject.Find("WaveManager").GetComponent<WavesManager>();
+        DataPersistance.PlayerStats.numberPotions = 5;
     }
 
     // Update is called once per frame
