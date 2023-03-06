@@ -29,4 +29,10 @@ public class MainMenuManager : MonoBehaviour
         //buttonClikEffect.Play();//Sound
         scenesManagerScript.StartGame();//Acces function in scenes manager
     }
+
+    public void MainMenuButton()//When we use the play button
+    {
+        //buttonClikEffect.Play();//Sound
+        scenesManagerScript.MainMenu();//Acces function in scenes manager
+    }
 }

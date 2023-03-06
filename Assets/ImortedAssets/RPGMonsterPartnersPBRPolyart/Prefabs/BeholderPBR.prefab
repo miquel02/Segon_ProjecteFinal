@@ -632,6 +632,7 @@ GameObject:
   - component: {fileID: 6987101692914003809}
   - component: {fileID: 1178481904}
   - component: {fileID: 3790429326950006945}
+  - component: {fileID: 6250538872463620073}
   m_Layer: 0
   m_Name: BeholderPBR
   m_TagString: Enemy
@@ -690,8 +691,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slimeRigidbody: {fileID: 6987101692914003809}
   target: {fileID: 0}
-  followRange: 10
-  isAttacking: 0
   hitParticle: {fileID: 2708598583397607910, guid: 6398d43fe79ea0140913dc5530c646af,
     type: 3}
   attackParticle: {fileID: 5824670795371433368, guid: f6fd568b816c64943a44efc3add3a881,
@@ -746,6 +745,23 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &6250538872463620073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7487410016656624447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411060de4483b5e4c9847cd3cbc18554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 0.5686275, g: 0.14901961, b: 0.5568628, a: 1}
+  needBoxIndicator: 1
+  needArrowIndicator: 1
+  needDistanceText: 1
+  indicator: {fileID: 0}
 --- !u!1 &7487410016656624449
 GameObject:
   m_ObjectHideFlags: 0

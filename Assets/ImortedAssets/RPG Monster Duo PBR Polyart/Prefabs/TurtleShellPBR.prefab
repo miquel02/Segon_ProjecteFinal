@@ -808,6 +808,7 @@ GameObject:
   - component: {fileID: 6528631630379662285}
   - component: {fileID: 7597085613002375629}
   - component: {fileID: 2373864223792163689}
+  - component: {fileID: -5880924259708532609}
   m_Layer: 0
   m_Name: TurtleShellPBR
   m_TagString: Enemy
@@ -933,6 +934,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0797135, y: 0.9950181, z: 1.3387831}
   m_Center: {x: 0.0049820542, y: 0.50070137, z: 0.36867565}
+--- !u!114 &-5880924259708532609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1774625739149480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411060de4483b5e4c9847cd3cbc18554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 0.03529412, g: 0.13333334, b: 0.49803925, a: 1}
+  needBoxIndicator: 1
+  needArrowIndicator: 1
+  needDistanceText: 1
+  indicator: {fileID: 0}
 --- !u!1 &1822049695589022
 GameObject:
   m_ObjectHideFlags: 0

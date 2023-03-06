@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         MyInput();
         //PlayerRegenStamina();
 
-        if (!isDead)
+        if (!isDead && GameManager.gameManager.isPaused == false)
         {
 
         
@@ -214,7 +214,7 @@ public class PlayerController : MonoBehaviour
                 PlayerTakeHeal(30);
             }
         }
-        else
+        if(isDead)
         {
             GameManager.gameManager.gameOver = true;
         }

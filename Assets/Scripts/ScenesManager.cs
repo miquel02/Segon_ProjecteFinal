@@ -14,12 +14,12 @@ public class ScenesManager : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene("MG_MainMenu");//Load main menu scene
+        SceneManager.LoadScene("MainMenu");//Load main menu scene
     }
 
     public void GameOver()
     {
-        SceneManager.LoadScene("MainMenu");//Load game over scene
+        SceneManager.LoadScene("GameOver");//Load game over scene
     }
     public void GameVictory()
     {

@@ -6,7 +6,7 @@ public class MoveForward : MonoBehaviour
 {
     public float speed = 10;
 
-    private float zRangeCar = -20f;
+    private float destroyRange = 150f;
 
     [SerializeField] ParticleSystem attackParticle;
 
@@ -24,9 +24,12 @@ public class MoveForward : MonoBehaviour
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
 
-        if (transform.position.y < zRangeCar && CompareTag("Bala"))
+        if (transform.position.x > destroyRange || transform.position.x < -destroyRange || transform.position.z > destroyRange || transform.position.z < -destroyRange)
         {
-            Destroy(gameObject);
+            if (CompareTag("Bala"))
+            {
+                Destroy(gameObject);
+            }      
         }
 
     }

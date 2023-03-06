@@ -10,9 +10,11 @@ public class GameManager : MonoBehaviour
 
     public int maxWave;
 
+    public bool isPaused;
+
     public static GameManager gameManager { get; private set; }
 
-    public StaminaManager playerStamina = new StaminaManager(100f, 100f, 10f, false);
+    public StaminaManager playerStamina = new StaminaManager(100f, 100f, 15f, false);
     public UnitHealth playerHealth = new UnitHealth(100, 100);
 
     void Awake()
@@ -33,8 +35,16 @@ public class GameManager : MonoBehaviour
     {
         if (gameOver)
         {
-            SceneManager.LoadScene("MainMenu");//Load game over scene
+            StartCoroutine(LoadLevelAfterDelay(5f));
         }
+
+
+    }
+
+    IEnumerator LoadLevelAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene("GameOver");//Load game over scene
     }
 
 }

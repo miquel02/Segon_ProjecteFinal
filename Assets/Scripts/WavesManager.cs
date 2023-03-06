@@ -25,6 +25,8 @@ public class WavesManager : MonoBehaviour
 
     private bool hasGivenPot;
     public ParticleSystem spawnParticle;
+    public ParticleSystem nextWaveParticle;
+    public Transform player;
 
     void Awake()
     {
@@ -81,9 +83,10 @@ public class WavesManager : MonoBehaviour
         {
             currWave++;
             GenerateWave();
+            SpawnWaveParticle();
             //Debug.Log(0);
 
-            if(currWave % 2==0)
+            if (currWave % 2==0)
             {
                 DataPersistance.PlayerStats.numberPotions++;
             }
@@ -152,7 +155,15 @@ public class WavesManager : MonoBehaviour
 
         newParticleSystem.Play();
 
-        Destroy(newParticleSystem.gameObject, 1f);
+        Destroy(newParticleSystem.gameObject, 2f);
+    }
+    void SpawnWaveParticle()
+    {
+        ParticleSystem newParticleSystem = Instantiate(nextWaveParticle, player.position, transform.rotation);
+
+        newParticleSystem.Play();
+
+        Destroy(newParticleSystem.gameObject, 2f);
     }
 }
 

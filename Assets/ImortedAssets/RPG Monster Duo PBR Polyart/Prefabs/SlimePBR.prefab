@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 975242665}
   - component: {fileID: 975242666}
   - component: {fileID: 3894675463776501039}
+  - component: {fileID: -8280878010289490219}
   m_Layer: 0
   m_Name: SlimePBR
   m_TagString: Enemy
@@ -523,7 +524,6 @@ MonoBehaviour:
   slimeRigidbody: {fileID: 8265006412817423572}
   target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
   followRange: 50
-  isAttacking: 1
   hitParticle: {fileID: 8525990746615576122, guid: b85d21f3b8fed714bacf0c4fd50fa512,
     type: 3}
   attackParticle: {fileID: 4021103657954561960, guid: 5c755f9bc5253ea418e919994537dcc7,
@@ -542,6 +542,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0797135, y: 0.9950181, z: 1.3387831}
   m_Center: {x: 0.0049820542, y: 0.50070137, z: 0.36867565}
+--- !u!114 &-8280878010289490219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919012471076396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 411060de4483b5e4c9847cd3cbc18554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetColor: {r: 0.42352945, g: 0.078431375, b: 0.07450981, a: 1}
+  needBoxIndicator: 1
+  needArrowIndicator: 1
+  needDistanceText: 1
+  indicator: {fileID: 0}
 --- !u!1 &1989916952965676
 GameObject:
   m_ObjectHideFlags: 0

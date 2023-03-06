@@ -12,10 +12,10 @@ public class BeholderController : MonoBehaviour
     private float knockbackForce = 300;
 
     public GameObject target; //drag and stop player object in the inspector
-    public float followRange;
+    private float followRange = 20;
     private float attackRange = 5f;
     private float backRange = 5;
-    public bool isAttacking;
+    private bool isAttacking;
 
     //Particles
     [SerializeField] ParticleSystem hitParticle;
