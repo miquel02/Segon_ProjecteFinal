@@ -21,7 +21,7 @@ public class MainMenuManager : MonoBehaviour
 
     private void Update()
     {
-        scoreText.text = ("MAX WAVE= " + DataPersistance.PlayerStats.maxWave);
+        scoreText.text = ("MAX WAVE: " + DataPersistance.PlayerStats.maxWave);
     }
 
     public void PlayButton()//When we use the play button

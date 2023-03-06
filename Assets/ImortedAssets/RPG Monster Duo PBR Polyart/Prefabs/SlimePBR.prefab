@@ -520,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f45df6ebae3d564c8833b56609b59f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimeSpeed: 0.01
+  slimeSpeed: 0.5
   slimeRigidbody: {fileID: 8265006412817423572}
   target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
   followRange: 50

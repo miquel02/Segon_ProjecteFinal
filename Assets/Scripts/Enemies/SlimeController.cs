@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SlimeController : MonoBehaviour
 {
-    public float slimeSpeed = 5;
+    private float slimeSpeed = 0.02f;
 
     public Rigidbody slimeRigidbody;
     private Vector3 moveDirection;
