@@ -13,6 +13,8 @@ public class HealthManager : MonoBehaviour
 
     [SerializeField] ParticleSystem dieParticle;
 
+    public AudioSource hitSoundEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +30,7 @@ public class HealthManager : MonoBehaviour
     public void DamageCharacter(int damage)
     {
         currentHealth -= damage;
+        hitSoundEffect.Play();
         if (currentHealth <= 0)
         {
             WavesManager.waveManager.spawnedEnemies.Remove(gameObject);

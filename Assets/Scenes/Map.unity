@@ -1114,12 +1114,6 @@ Rigidbody:
     type: 3}
   m_PrefabInstance: {fileID: 1876141338}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &981614385 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 7726511499524026324, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-    type: 3}
-  m_PrefabInstance: {fileID: 1876141338}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &986264680 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5639146431584814866, guid: 5bc8fe3ec39f19549823f1494511ae7a,
@@ -1313,6 +1307,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2486869858880554502, guid: 6adef8e1420af2b46ae142b91bf73737,
     type: 3}
   m_PrefabInstance: {fileID: 445575423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1291976589 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1088078365224981069, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
+    type: 3}
+  m_PrefabInstance: {fileID: 1876141338}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1411779498
 GameObject:
@@ -1889,58 +1889,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 641831762, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
-      propertyPath: m_Drag
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 641831762, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
-      propertyPath: m_Constraints
-      value: 84
-      objectReference: {fileID: 0}
-    - target: {fileID: 641831762, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 641831762, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 254219100242116386, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: m_Actions
-      value: 
-      objectReference: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018,
-        type: 3}
-    - target: {fileID: 254219100242116386, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 254219100242116386, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: m_DefaultActionMap
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: rb
-      value: 
-      objectReference: {fileID: 981614383}
-    - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: _speed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 981614381}
-    - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: _Collider
-      value: 
-      objectReference: {fileID: 981614385}
     - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
         type: 3}
       propertyPath: healthBar
@@ -1948,24 +1896,14 @@ PrefabInstance:
       objectReference: {fileID: 986264680}
     - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
-      propertyPath: playerObj
-      value: 
-      objectReference: {fileID: 981614381}
-    - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
-        type: 3}
       propertyPath: staminaBar
       value: 
       objectReference: {fileID: 182641858}
     - target: {fileID: 5709584032851352174, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
         type: 3}
-      propertyPath: orientation
+      propertyPath: attackSoundEffect
       value: 
-      objectReference: {fileID: 1876141339}
+      objectReference: {fileID: 1291976589}
     - target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598,
         type: 3}
       propertyPath: m_Name
@@ -2026,8 +1964,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 254219100242116386, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
 --- !u!4 &1876141339 stripped
 Transform:

@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour
     private bool isAttack;
     private bool isRoll;
     private bool isSpin;
+    //Audios
+    public AudioSource attackSoundEffect;
 
     private void Start()
     {
@@ -139,6 +141,7 @@ public class PlayerController : MonoBehaviour
                 {
                     animator.SetBool("isAttacking", true);
                     PlayerUseInstantStamina(20f);
+                    attackSoundEffect.Play();
                     hasAttacked = true;
                     Invoke(nameof(DelayedCanMove), 0.2f);
                 }

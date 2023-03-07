@@ -5,7 +5,8 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour
 {
     //Script to damage enemies with the sword
-    private int damage;//Damage amount dealt
+    private int damage = 20;//Damage amount dealt
+    
 
     private void OnTriggerEnter(Collider other)//If collider hits enemy damage them
     {

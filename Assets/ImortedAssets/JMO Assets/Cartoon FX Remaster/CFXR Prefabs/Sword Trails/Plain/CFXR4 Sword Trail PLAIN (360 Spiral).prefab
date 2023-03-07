@@ -4716,7 +4716,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d6961048dabe08408133bd9b84e9df5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  hitSoundEffect: {fileID: 0}
 --- !u!65 &8434462170379207533
 BoxCollider:
   m_ObjectHideFlags: 0
