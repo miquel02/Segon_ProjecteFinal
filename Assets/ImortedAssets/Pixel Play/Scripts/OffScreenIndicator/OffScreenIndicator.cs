@@ -24,7 +24,7 @@ public class OffScreenIndicator : MonoBehaviour
 
     void Awake()
     {
-        mainCamera = Camera.main;
+        mainCamera = FindObjectOfType<Camera>();
         screenCentre = new Vector3(Screen.width, Screen.height, 0) / 2;
         screenBounds = screenCentre * screenBoundOffset;
         TargetStateChanged += HandleTargetStateChanged;

@@ -4,74 +4,63 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    //This script controlls the player movement and interactions
+
+    //Access the players components
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Collider _Collider;
-    public float _speed;
-    [SerializeField] private float _turnSpeed = 360;
-    private Vector3 _input;
-
+    //Variables to control the players speed
+    private float _turnSpeed = 360;
+    private float _speed;
     private float normalSpeed = 20;
     private float sprintSpeed = 40;
     private float rollSpeed = 100;
-
+    //Variables to control player actions
     public bool canMove;
     public bool canRoll;
     public bool hasAttacked;
     public bool hasSpinned;
-
+    //Variables to control player movement
     public Transform orientation;
-
     float horizontalInput;
     float verticalInput;
-
     Vector3 moveDirection;
-
     //Stats
     public bool isTired;
     [SerializeField] StaminaBar staminaBar;
     [SerializeField] HealthBar healthBar;
     public bool isDead;
-
     //Animations
     public Animator animator;
-    public bool isMoving;
-
+    private bool isMoving;
     private bool isWalk;
     private bool isRun;
     private bool isAttack;
     private bool isRoll;
     private bool isSpin;
 
-    //Particles
-
-
     private void Start()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();//Access the animator
+        _rb = GetComponent<Rigidbody>();//Access the rigidbody
+        _Collider = GetComponent<Collider>();//Access the collider
+        _rb.freezeRotation = true;//We freeze the player rotations
+        _Collider.enabled = true;//Enable the collider
+        //We set the variables to make sure they ara in the correct state
         canMove = true;
         canRoll = true;
         isTired = false;
-        isDead = false;
-        _Collider.enabled = true;
-
-        _rb = GetComponent<Rigidbody>();
-        _Collider = GetComponent<Collider>();
-        _rb.freezeRotation = true;
+        isDead = false;            
     }
 
     private void Update()
     {
-        //GatherInput();
-        //Look();
 
-        MyInput();
-        //PlayerRegenStamina();
-
+        MyInput();//We get the horizontal and vertical inputs
+        //"If" to block the actons when we are dead or the game is paused
         if (!isDead && GameManager.gameManager.isPaused == false)
         {
-
-        
-            if (GameManager.gameManager.playerStamina.Stamina < 1)
+            if (GameManager.gameManager.playerStamina.Stamina < 1)//When we run out of stamina we are tired
             {
                 isTired = true;
             }
@@ -84,7 +73,6 @@ public class PlayerController : MonoBehaviour
                 isAttack = false;
                 isSpin = false;
             }
-
             //Walk
             if (horizontalInput != 0f || verticalInput != 0f)
             {  
@@ -93,9 +81,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 animator.SetBool("isMoving", false);
-            
             }
-
             //Roll
             if (Input.GetKeyDown(KeyCode.Space) && !isRoll)
             {
@@ -104,21 +90,16 @@ public class PlayerController : MonoBehaviour
                 isRun = false;
                 isAttack = false;
                 isSpin = false;
-
                 if (isRoll && !isTired)
                 {
                     _Collider.enabled = false;
                     PlayerUseInstantStamina(40f);
                     animator.SetBool("isRolling", true);
                     StartCoroutine(RollTimer());
-                    //transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
                     Invoke(nameof(DelayedCanMove), 0.4f);
                 }    
             }
-   
-
             //Sprint
-
             if(GameManager.gameManager.playerStamina.Stamina > 0 && !isTired)
             {
                 if (Input.GetKey(KeyCode.LeftShift))
@@ -143,10 +124,8 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("isSprint", false);
                 _speed = normalSpeed;
                 PlayerRegenStamina();
-
             }
         
-
             //Attack
             if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttack)
             {
@@ -164,20 +143,8 @@ public class PlayerController : MonoBehaviour
                     Invoke(nameof(DelayedCanMove), 0.2f);
                 }
             }
-            /*
-            if (Input.GetKey(KeyCode.Mouse1))
-            {
-                //canMove = false;
-                animator.SetBool("isBlocking", true);
-            }
-            else if (!canMove)
-            {
-                Invoke(nameof(DelayedCanMove), 0.4f);
-                animator.SetBool("isBlocking", false);
-            }*/
-
             //Spin
-            if (Input.GetKeyDown(KeyCode.Mouse2) && !isSpin)
+            if (Input.GetKeyDown(KeyCode.E) && !isSpin)
             {
                 isRoll = false;
                 isWalk = false;
@@ -193,11 +160,9 @@ public class PlayerController : MonoBehaviour
                     Invoke(nameof(DelayedCanMove), 0.2f);           
                 }         
             }   
-        
             //Dies
             if(GameManager.gameManager.playerHealth.currentHealth <= 0)
             {
-
                 isRoll = false;
                 isWalk = false;
                 isRun = false;
@@ -207,14 +172,14 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("dead");
                 isDead = true;
             }
-
+            //Heal
             if(DataPersistance.PlayerStats.numberPotions > 0 && Input.GetKeyDown(KeyCode.Q))
             {
                 DataPersistance.PlayerStats.numberPotions--;
                 PlayerTakeHeal(30);
             }
         }
-        if(isDead)
+        if(isDead)//If we die game over is set to true
         {
             GameManager.gameManager.gameOver = true;
         }
@@ -222,42 +187,25 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (canMove && !isDead)
+        if (canMove && !isDead)//If we can move an we arent dead we move
         {
             Move();
         }  
     }
-
-    /*private void Look()
-    {
-        if (_input == Vector3.zero) return;
-
-        var rot = Quaternion.LookRotation(_input.ToIso(), Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, _turnSpeed * Time.deltaTime);
-    }*/
-
-    private void MyInput()
+    private void MyInput()//We access the inputs
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
     }
-    private void Move()
+    private void Move()//Function
     {
-      
-            //_rb.MovePosition(transform.position + transform.forward * _input.normalized.magnitude * _speed * Time.deltaTime);
-
-            // calculate movement direction
-            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-
-                _rb.AddForce(moveDirection.normalized * _speed * 10f, ForceMode.Force);
-
+        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        _rb.AddForce(moveDirection.normalized * _speed * 10f, ForceMode.Force);
     }
-    
-    public void DelayedCanMove()
+    public void DelayedCanMove()//Function to controll timings between actions and animations
     {
         canMove = true;
         canRoll = true;
-        //isAttacking = false;
         isRoll = false;
         isAttack = false;
         isSpin = false;
@@ -265,53 +213,38 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isRolling", false);
         animator.SetBool("isSpinning", false);
         _Collider.enabled = true;
-
-
-
     }
 
-
-    private void PlayerUseStamina(float _staminaAmount)
+    private void PlayerUseStamina(float _staminaAmount)//Function to use stamina over time
     {
         GameManager.gameManager.playerStamina.UseStamina(_staminaAmount);
         staminaBar.SetStamina(GameManager.gameManager.playerStamina.Stamina);
     }
-    private void PlayerUseInstantStamina(float _staminaAmount)
+    private void PlayerUseInstantStamina(float _staminaAmount)//Function to use stamina
     {
         GameManager.gameManager.playerStamina.UseInstantStamina(_staminaAmount);
         staminaBar.SetStamina(GameManager.gameManager.playerStamina.Stamina);
     }
-    private void PlayerRegenStamina()
+    private void PlayerRegenStamina()//Function to regen stamina
     {
         GameManager.gameManager.playerStamina.RegenStamina();
         staminaBar.SetStamina(GameManager.gameManager.playerStamina.Stamina);
     }
     
-    public void PlayerTakeDmg(int _dmg)
+    public void PlayerTakeDmg(int _dmg)//Function to take damage
     {
         GameManager.gameManager.playerHealth.DamageUnit(_dmg);
         healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
-        animator.SetTrigger("isHit");
-        
+        animator.SetTrigger("isHit");    
     }
-
-    private void PlayerTakeHeal(int _heal)
+    private void PlayerTakeHeal(int _heal)//Function to heal
     {
         GameManager.gameManager.playerHealth.HealUnit(_heal);
         healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
     }
 
-    IEnumerator RollTimer()
+    IEnumerator RollTimer()//Courroutine to controll the roll animation
     {   yield return new WaitForSeconds(0.2f);
-        _rb.AddForce(transform.forward * rollSpeed, ForceMode.Impulse);
-        //transform.Translate(Vector3.forward * rollSpeed * Time.deltaTime);
-        Debug.Log("Rodar");
-        
+        _rb.AddForce(transform.forward * rollSpeed, ForceMode.Impulse);    
     }
-}
-
-public static class Helpers
-{
-    private static Matrix4x4 _isoMatrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-    public static Vector3 ToIso(this Vector3 input) => _isoMatrix.MultiplyPoint3x4(input);
 }

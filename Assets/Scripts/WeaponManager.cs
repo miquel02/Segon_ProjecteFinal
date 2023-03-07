@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    public int damage;
+    //Script to damage enemies with the sword
+    private int damage;//Damage amount dealt
 
-    private PlayerController playerControllerScript;
-
-    
-
-    private void Start()
-    {
-        playerControllerScript = GameObject.Find("MaleCharacterPBR").GetComponent<PlayerController>();
-    }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)//If collider hits enemy damage them
     {
         if (other.gameObject.CompareTag("Enemy") )
         {

@@ -4,28 +4,27 @@ using UnityEngine;
 
 public class BeholderController : MonoBehaviour
 {
-    private float slimeSpeed = 0.05f;
 
+    //Script to control beholder enemies
+    //Beholder speed
+    private float slimeSpeed = 0.05f;
+    //Beholder components
     public Rigidbody slimeRigidbody;
     private Vector3 moveDirection;
-
     private float knockbackForce = 300;
-
-    public GameObject target; //drag and stop player object in the inspector
+    //Variables to set target and attack range
+    public GameObject target; 
     private float followRange = 20;
     private float attackRange = 5f;
     private float backRange = 5;
     private bool isAttacking;
-
     //Particles
     [SerializeField] ParticleSystem hitParticle;
     [SerializeField] ParticleSystem attackParticle;
-
+    //Shotting
     public GameObject shootPivot;
     public GameObject bala;
-
     //Animations
-
     public Animator animator;
 
     // Start is called before the first frame update
@@ -33,20 +32,19 @@ public class BeholderController : MonoBehaviour
     {
         target = GameObject.Find("MaleCharacterPBR");
         isAttacking = true;
-
     }
 
     // Update is called once per frame
     public void Update()
     {
-        float dist = Vector3.Distance(target.transform.position, transform.position);
+        float dist = Vector3.Distance(target.transform.position, transform.position);//Calculate the direction between player and enemies
 
-        if (dist <= followRange && dist >= attackRange)
+        if (dist <= followRange && dist >= attackRange)//When enemy is at follow range
         {
             transform.position = Vector3.MoveTowards(transform.position, target.transform.position, slimeSpeed);
             transform.LookAt(target.transform);
         }
-        if (dist <= attackRange)
+        if (dist <= attackRange)//When enemy is at attack range
         {
 
             transform.LookAt(target.transform);
@@ -58,7 +56,7 @@ public class BeholderController : MonoBehaviour
         {
             animator.SetBool("isAttacking", false);
         }
-        if (dist <= backRange)
+        if (dist <= backRange)//When enemy is at backing range
         {
 
             transform.LookAt(target.transform);
@@ -70,7 +68,7 @@ public class BeholderController : MonoBehaviour
             animator.SetBool("isAttacking", false);
         }
 
-        if (gameObject.GetComponent<HealthManager>().currentHealth <= 0)
+        if (gameObject.GetComponent<HealthManager>().currentHealth <= 0)//Dies
         {
             animator.SetBool("isDead", true);
             animator.SetBool("isAttacking", false);
@@ -106,36 +104,29 @@ public class BeholderController : MonoBehaviour
         }
     }
 
-    //Attacks player
-    public void attack()
-    {
-        
+    public void attack()//Attacks player
+    {  
         if(isAttacking && AnimatorIsPlaying("Attack01"))
         {
-            //animator.SetBool("isAttacking", true);
             StartCoroutine(AttackCoolDown());
             isAttacking = false;
         }
     }
 
-    void SpawnHitParticle()
+    void SpawnHitParticle()//Spawn particles
     {
         ParticleSystem newParticleSystem = Instantiate(hitParticle, shootPivot.transform.position, transform.rotation);
-
         newParticleSystem.Play();
-
         Destroy(newParticleSystem.gameObject, 1f);
     }
-    void SpawnAttackParticle()
+    void SpawnAttackParticle()//Spawn particles
     {
         ParticleSystem newParticleSystem = Instantiate(attackParticle, shootPivot.transform.position + transform.forward, transform.rotation);
-
         newParticleSystem.Play();
-
         Destroy(newParticleSystem.gameObject, 1f);
     }
 
-    void SpawnAttackBala()
+    void SpawnAttackBala()//Instantiate bullet
     {
         Instantiate(bala, shootPivot.transform.position, transform.rotation);
     }
@@ -152,7 +143,7 @@ public class BeholderController : MonoBehaviour
             animator.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
-    IEnumerator AttackCoolDown()
+    IEnumerator AttackCoolDown()//Attack cooldown
     {
         isAttacking = false;
         StartCoroutine(BalaSpawnTimer());
@@ -160,7 +151,7 @@ public class BeholderController : MonoBehaviour
         isAttacking = true;
         //SpawnAttackBala();
     }
-    IEnumerator BalaSpawnTimer()
+    IEnumerator BalaSpawnTimer()//Attack timer
     {
         yield return new WaitForSeconds(0.2f);
         SpawnAttackBala();

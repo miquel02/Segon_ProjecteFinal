@@ -12,7 +12,8 @@ namespace PixelPlay.OffScreenIndicator
         /// <returns></returns>
         public static Vector3 GetScreenPosition(Camera mainCamera, Vector3 targetPosition)
         {
-            Vector3 screenPosition = mainCamera.WorldToScreenPoint(targetPosition);
+            //Vector3 screenPosition = mainCamera.WorldToScreenPoint(targetPosition);
+            Vector3 screenPosition = Object.FindObjectOfType<Camera>().WorldToScreenPoint(targetPosition);
             return screenPosition;
         }
 
