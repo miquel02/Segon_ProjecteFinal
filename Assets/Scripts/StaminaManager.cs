@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class StaminaManager
 {
+    //Script to manage stamina
     public float currentStamina;
     float maxStamina;
     float staminaRegenSpeed;

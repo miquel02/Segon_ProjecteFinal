@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    //Script to display health on the health bar
     Slider healthSlider;
 
-    // Start is called before the first frame update
     void Start()
     {
         healthSlider = GetComponent<Slider>();

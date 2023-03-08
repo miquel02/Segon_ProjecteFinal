@@ -40,6 +40,9 @@ public class PlayerController : MonoBehaviour
     private bool isSpin;
     //Audios
     public AudioSource attackSoundEffect;
+    public AudioSource rollSoundEffect;
+    public AudioSource spinSoundEffect;
+    public AudioSource damageSoundEffect;
 
     private void Start()
     {
@@ -96,6 +99,7 @@ public class PlayerController : MonoBehaviour
                 {
                     _Collider.enabled = false;
                     PlayerUseInstantStamina(40f);
+                    rollSoundEffect.Play();
                     animator.SetBool("isRolling", true);
                     StartCoroutine(RollTimer());
                     Invoke(nameof(DelayedCanMove), 0.4f);
@@ -159,6 +163,7 @@ public class PlayerController : MonoBehaviour
                 {
                     hasSpinned = true;
                     PlayerUseInstantStamina(40f);
+                    spinSoundEffect.Play();
                     animator.SetBool("isSpinning", true); 
                     Invoke(nameof(DelayedCanMove), 0.2f);           
                 }         
@@ -238,7 +243,8 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.gameManager.playerHealth.DamageUnit(_dmg);
         healthBar.SetHealth(GameManager.gameManager.playerHealth.Health);
-        animator.SetTrigger("isHit");    
+        animator.SetTrigger("isHit");
+        damageSoundEffect.Play();
     }
     private void PlayerTakeHeal(int _heal)//Function to heal
     {

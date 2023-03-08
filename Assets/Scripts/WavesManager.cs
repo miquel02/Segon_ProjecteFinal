@@ -26,6 +26,8 @@ public class WavesManager : MonoBehaviour
     public ParticleSystem nextWaveParticle;
     public Transform player;
 
+    public AudioSource winSoundEffect;
+
     void Awake()//Makes this script unic
     {
         if (waveManager != null && waveManager != this)
@@ -148,6 +150,7 @@ public class WavesManager : MonoBehaviour
     {
         ParticleSystem newParticleSystem = Instantiate(nextWaveParticle, player.position, transform.rotation);
         newParticleSystem.Play();
+        winSoundEffect.Play();
         Destroy(newParticleSystem.gameObject, 2f);
     }
 }

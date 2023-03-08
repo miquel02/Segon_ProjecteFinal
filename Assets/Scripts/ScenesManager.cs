@@ -21,8 +21,9 @@ public class ScenesManager : MonoBehaviour
     {
         SceneManager.LoadScene("GameOver");//Load game over scene
     }
-    public void GameVictory()
+
+    public void Controls()
     {
-        SceneManager.LoadScene("MG_GameWin");//Load game win scene
+        SceneManager.LoadScene("Controls");//Load game win scene
     }
 }

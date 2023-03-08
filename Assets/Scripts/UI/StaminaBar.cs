@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
-
+    //Script to display health on the stamina bar
     Slider staminaSlider;
 
-    // Start is called before the first frame update
     void Start()
     {
         staminaSlider = GetComponent<Slider>();

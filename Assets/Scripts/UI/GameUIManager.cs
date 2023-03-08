@@ -6,25 +6,22 @@ using TMPro;
 
 public class GameUIManager : MonoBehaviour
 {
-
+    //Script to mamage the main menu UI
     private WavesManager wavesManagerScript;
 
     public TMP_Text waveText;
     public TMP_Text potText;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         wavesManagerScript = GameObject.Find("WaveManager").GetComponent<WavesManager>();
         DataPersistance.PlayerStats.numberPotions = 5;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         waveText.text = ("WAVE: "+ wavesManagerScript.currWave);
-
         potText.text = ("x" + DataPersistance.PlayerStats.numberPotions);
     }
 }

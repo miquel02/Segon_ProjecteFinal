@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HealthManager : MonoBehaviour
 {
+    //Script to manage enemy health
     public int maxHealth = 100;
     public int currentHealth;
 
@@ -15,17 +16,11 @@ public class HealthManager : MonoBehaviour
 
     public AudioSource hitSoundEffect;
 
-    // Start is called before the first frame update
     void Start()
     {
         UpdateMaxHealth(maxHealth);
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-      
-    }
 
     public void DamageCharacter(int damage)
     {
@@ -37,10 +32,6 @@ public class HealthManager : MonoBehaviour
             Destroy(gameObject, 1.5f);
             SpawnDiParticle();
         }
-
-
-       // rigidBody.AddForce(transform.right * 10, ForceMode.Impulse);
-
     }
 
     public void UpdateMaxHealth(int newMaxHealth)
@@ -49,12 +40,10 @@ public class HealthManager : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    void SpawnDiParticle()
+    void SpawnDiParticle()//Particles when enemy dies
     {
         ParticleSystem newParticleSystem = Instantiate(dieParticle, transform.position, transform.rotation);
-
         newParticleSystem.Play();
-
         Destroy(newParticleSystem.gameObject, 1f);
     }
 }

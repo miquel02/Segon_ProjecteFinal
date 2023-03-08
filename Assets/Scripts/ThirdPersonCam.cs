@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ThirdPersonCam : MonoBehaviour
 {
+    //Script to control the camera
     [Header("References")]
     public Transform orientation;
     public Transform player;

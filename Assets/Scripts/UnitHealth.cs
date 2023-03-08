@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UnitHealth
 {
+    //Script to manage health
     public int currentHealth;
     int maxHealth;
 
